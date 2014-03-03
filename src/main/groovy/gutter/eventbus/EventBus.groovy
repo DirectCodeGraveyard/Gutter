@@ -2,7 +2,7 @@ package gutter.eventbus
 
 import groovy.transform.CompileStatic
 import groovy.transform.stc.ClosureParams
-import groovy.transform.stc.FromString
+import groovy.transform.stc.SimpleType
 import gutter.collections.MultiMap
 
 /**
@@ -17,7 +17,7 @@ class EventBus {
         this.options = options
     }
 
-    void on(String eventName, @ClosureParams(value = FromString, options = "Map<String, ? extends Object>") Closure handler) {
+    void on(String eventName, @ClosureParams(value = SimpleType, options = ["Map<String, ? extends Object>"]) Closure handler) {
         handlers.add(eventName, handler)
     }
 
