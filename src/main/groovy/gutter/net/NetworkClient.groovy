@@ -2,52 +2,62 @@ package gutter.net
 
 import groovy.transform.CompileStatic
 
-import java.nio.ByteBuffer
-import java.nio.channels.SocketChannel
-
 @CompileStatic
 class NetworkClient {
-    final InetSocketAddress address
-    private SocketChannel channel
+    final SocketAddress address
+    private Socket socket
+    private BufferedReader input
+    private PrintStream output
 
     NetworkClient(String host, int port) {
         address = new InetSocketAddress(host, port)
-        channel = new Socket().channel
     }
 
-    SocketChannel getChannel() {
-        channel
+    NetworkClient(Socket socket) {
+        this.socket = socket
+        this.address = socket.remoteSocketAddress
+        this.input = socket.inputStream.newReader()
+        this.output = new PrintStream(socket.outputStream)
     }
 
     void connect() {
-        if (channel.connected) {
+        if (socket.connected) {
             throw new IllegalStateException("Socket already connected!")
         }
-        channel.connect(address)
+        socket.connect(address)
+        input = socket.inputStream.newReader()
+        output = new PrintStream(socket.outputStream)
     }
 
     void write(byte[] bytes) {
-        channel.write(ByteBuffer.wrap(bytes))
+        output.write(bytes)
     }
 
-    void writeln(String line) {
-        channel.write(ByteBuffer.wrap("${line}\n".bytes))
+    void println(String line) {
+        output.println(line)
     }
 
-    void write(String string) {
-        channel.write(ByteBuffer.wrap(string.bytes))
+    void print(String string) {
+        output.print(string)
     }
 
     String readLine() {
-        String line = ""
-        while (true) {
-            def buffer = ByteBuffer.allocate(1)
-            def amount = channel.read(buffer)
-            if (amount == 0) {
-                break
-            }
-            line += buffer.getChar(0)
-        }
-        line
+        input.readLine()
+    }
+
+    List<String> readLines() {
+        input.readLines()
+    }
+
+    void close() {
+        socket.close()
+    }
+
+    byte read() {
+       input.read()
+    }
+
+    void read(char[] chars) {
+        input.read(chars)
     }
 }
