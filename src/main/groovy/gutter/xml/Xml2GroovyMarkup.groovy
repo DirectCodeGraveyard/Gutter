@@ -113,4 +113,22 @@ class Xml2GroovyMarkup {
     void complete() {
         complete = true
     }
+
+    static void main(String... args) {
+        if (!args) {
+            println "Usage: Xml2GroovyMarkup <xml/html file>"
+            System.exit(1)
+        }
+        def input = new File(args[0])
+        if (!input.exists()) {
+            println "'${input.absolutePath}' does not exist!"
+            System.exit(1)
+        }
+        def output = new StringWriter()
+        def converter = new Xml2GroovyMarkup(output, 4)
+        converter.feed(input)
+        converter.complete()
+        print output.toString()
+        System.exit(0)
+    }
 }
