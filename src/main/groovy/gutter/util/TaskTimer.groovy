@@ -2,6 +2,8 @@ package gutter.util
 
 import groovy.transform.CompileStatic
 
+import java.time.Duration
+
 @CompileStatic
 class TaskTimer {
     static long timeOf(Closure closure) {
@@ -9,5 +11,9 @@ class TaskTimer {
         closure()
         def stopTime = System.currentTimeMillis()
         return stopTime - startTime
+    }
+
+    static Duration durationOf(Closure closure) {
+        return Duration.ofMillis(timeOf(closure))
     }
 }
