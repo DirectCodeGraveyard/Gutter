@@ -141,14 +141,31 @@ class GroovyCodeWriter {
         out.println('}')
     }
 
+    void createImport(String className) {
+        out.println("import ${className}")
+    }
+
+    void createSimpleClosureCall(String on, String name, Closure callback) {
+        out.print(on)
+        out.print('.')
+        out.print(name)
+        out.println(' {')
+        out.incrementIndent()
+        out.autoIndent = true
+        callback()
+        out.decrementIndent()
+        out.autoIndent = false
+        out.println('}')
+    }
+
     void createSimpleClosureCall(String name, Closure callback) {
         out.print(name)
         out.println(' {')
         out.incrementIndent()
         out.autoIndent = true
         callback()
-        out.autoIndent = false
         out.decrementIndent()
+        out.autoIndent = false
         out.println('}')
     }
 
