@@ -7,13 +7,12 @@ import org.codehaus.groovy.control.CompilationFailedException
 /**
  * A Very Simple Brace-notation Variable Template Engine.
  * <code>
- *     def engine = new BraceVariableTemplateEngine()
- *     def template = engine.createTemplate("""\
- *          <hello>{Hi}</hello>
- *     """.stripIndent())
- *     def output = template.make([ Hi: "Hello World" ]).toString()
- *     assert output == "<hello>Hello World</hello>"
- *
+ * def engine = new BraceVariableTemplateEngine()<br/>
+ * def template = engine.createTemplate("""\<br/>
+ *    <greet>{Greeting}</greet><br/>
+ * """.stripIndent())<br/>
+ * assert template.make(Greeting: "Hello World").toString() == "<greet>Hello World</greet>\n"<br/>
+ * </code>
  */
 class BraceVariableTemplateEngine extends TemplateEngine {
     @Override
