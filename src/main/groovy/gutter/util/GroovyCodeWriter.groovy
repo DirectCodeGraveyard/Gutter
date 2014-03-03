@@ -73,6 +73,85 @@ class GroovyCodeWriter {
         out.println('}')
     }
 
+    void createMethodCallWithMapParams(String name, Map<String, String> params) {
+        out.print(name)
+        out.print('(')
+        params.eachWithIndex { key, value, index ->
+            out.print(key)
+            out.print(': ')
+            out.print(value)
+            if (index != params.size() - 1) {
+                out.print(', ')
+            }
+        }
+        out.println(')')
+    }
+
+    void createMethodCallWithMapParamsAndStringAsLastParam(String name, Map<String, String> params, String lastParam) {
+        out.print(name)
+        out.print('(')
+        params.eachWithIndex { key, value, index ->
+            out.print(key)
+            out.print(': ')
+            out.print(value)
+            out.print(', ')
+        }
+        out.print("'${lastParam}'")
+        out.println(')')
+    }
+
+    void createClosureCallWithMapParams(String name, Map<String, String> params, Closure callback) {
+        out.print(name)
+        out.print('(')
+        params.eachWithIndex { key, value, index ->
+            out.print(key)
+            out.print(': ')
+            out.print(value)
+            if (index != params.size() - 1) {
+                out.print(', ')
+            }
+        }
+        out.println(') {')
+        out.incrementIndent()
+        out.autoIndent = true
+        callback()
+        out.autoIndent = false
+        out.decrementIndent()
+        out.println('}')
+    }
+
+    void createClosureCallWithMapParamsAndStringAsLastParam(String name, Map<String, String> params, String lastParam, Closure callback) {
+        out.print(name)
+        out.print('(')
+        params.eachWithIndex { key, value, index ->
+            out.print(key)
+            out.print(': ')
+            out.print(value)
+            if (index != params.size() - 1) {
+                out.print(', ')
+            }
+        }
+        out.print("'${lastParam}'")
+        out.println(') {')
+        out.incrementIndent()
+        out.autoIndent = true
+        callback()
+        out.autoIndent = false
+        out.decrementIndent()
+        out.println('}')
+    }
+
+    void createSimpleClosureCall(String name, Closure callback) {
+        out.print(name)
+        out.println(' {')
+        out.incrementIndent()
+        out.autoIndent = true
+        callback()
+        out.autoIndent = false
+        out.decrementIndent()
+        out.println('}')
+    }
+
     void createVariableDeclaration(String type = "def", String name, String equalsExpr) {
         out.print(type ?: 'def')
         out.print(' ')
