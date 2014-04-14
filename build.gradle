@@ -1,7 +1,10 @@
 apply plugin: "groovy"
 
+group = "com.directmyfile"
+version = "0.1.0"
+
 ext {
-    indy = true
+    indy = false
 }
 
 repositories {
