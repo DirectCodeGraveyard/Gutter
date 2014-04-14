@@ -13,4 +13,5 @@ repositories {
 
 dependencies {
     compile "org.codehaus.groovy:groovy-all:2.3.0-beta-2${indy ? ":indy" : ""}"
+    testCompile "org.junit:junit:4.11"
 }
