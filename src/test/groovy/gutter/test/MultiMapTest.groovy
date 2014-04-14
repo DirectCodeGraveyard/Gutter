@@ -1,8 +1,11 @@
 package gutter.test
 
 import gutter.MultiMap
+import org.junit.FixMethodOrder
 import org.junit.Test
+import org.junit.runners.MethodSorters
 
+@FixMethodOrder(MethodSorters.JVM)
 class MultiMapTest {
     @Test
     void testCreationWorks() {
