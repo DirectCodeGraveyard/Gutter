@@ -1,8 +1,10 @@
 package gutter.runtime
 
+import groovy.transform.CompileStatic
 import gutter.MultiMap
 import gutter.Mutable
 
+@CompileStatic
 class GutterMethods {
 
     static <T> Mutable<T> asMutable(T value) {

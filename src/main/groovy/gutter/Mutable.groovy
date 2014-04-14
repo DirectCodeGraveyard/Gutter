@@ -1,5 +1,8 @@
 package gutter
 
+import groovy.transform.CompileStatic
+
+@CompileStatic
 class Mutable<T> {
     private T value
 
