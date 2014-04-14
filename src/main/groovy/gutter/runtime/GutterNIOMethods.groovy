@@ -13,11 +13,11 @@ class GutterNIOMethods {
         Files.exists(path, linkOptions)
     }
 
-    static long copyTo(Path source, Path target, CopyOption... options) {
+    static void copyTo(Path source, Path target, CopyOption... options) {
         Files.copy(source, target, options)
     }
 
-    static long copyFrom(Path target, Path source, CopyOption... options) {
+    static void copyFrom(Path target, Path source, CopyOption... options) {
         Files.copy(source, target, options)
     }
 }

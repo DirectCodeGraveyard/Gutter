@@ -18,7 +18,7 @@ class MultiMapTest {
         map.add("key2", "value1")
         map.add("key2", "value2")
 
-        assert map.keys() == [ "key1", "key2" ]
+        assert map.keys() == [ "key1", "key2" ].toSet()
         assert map["key1"] == [ "value1", "value2" ]
         assert map["key2"] == [ "value1", "value2" ]
     }

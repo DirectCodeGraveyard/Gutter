@@ -2,6 +2,10 @@ package gutter
 
 import groovy.transform.CompileStatic
 
+/**
+ * A MultiMap is a map to a String and a List of objects
+ * @param < V > Value Type
+ */
 @CompileStatic
 class MultiMap<V> {
     private final Map<String, List<V>> delegate
@@ -26,6 +30,10 @@ class MultiMap<V> {
         }
     }
 
+    boolean contains(String key) {
+        return key in keys()
+    }
+
     void add(String key, V value) {
         get(key).add(value)
     }
@@ -44,5 +52,10 @@ class MultiMap<V> {
 
     void each(String key, Closure closure) {
         get(key).each(closure)
+    }
+
+    @Override
+    String toString() {
+        return delegate.toString()
     }
 }
