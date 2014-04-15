@@ -11,7 +11,7 @@ class MultiMap<V> {
     private final Map<String, List<V>> delegate
 
     MultiMap() {
-        delegate = [:]
+        delegate = new HashMap<String, List<V>>()
     }
 
     List<V> getAt(String key) {

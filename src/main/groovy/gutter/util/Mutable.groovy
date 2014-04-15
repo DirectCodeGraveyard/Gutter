@@ -51,4 +51,9 @@ class Mutable<T> implements Disposable {
         }
         value = null
     }
+
+    @Override
+    boolean equals(Object other) {
+        value == other
+    }
 }
