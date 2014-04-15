@@ -1,8 +1,8 @@
 package gutter.runtime
 
 import groovy.transform.CompileStatic
-import gutter.MultiMap
-import gutter.Mutable
+import gutter.collections.MultiMap
+import gutter.util.Mutable
 
 @CompileStatic
 class GutterMethods {

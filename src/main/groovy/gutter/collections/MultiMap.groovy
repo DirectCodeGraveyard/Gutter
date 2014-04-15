@@ -1,4 +1,4 @@
-package gutter
+package gutter.collections
 
 import groovy.transform.CompileStatic
 

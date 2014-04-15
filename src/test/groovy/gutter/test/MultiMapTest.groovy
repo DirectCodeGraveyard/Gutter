@@ -1,6 +1,6 @@
 package gutter.test
 
-import gutter.MultiMap
+import gutter.collections.MultiMap
 import org.junit.FixMethodOrder
 import org.junit.Test
 import org.junit.runners.MethodSorters
