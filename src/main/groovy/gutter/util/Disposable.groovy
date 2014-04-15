@@ -5,5 +5,8 @@ package gutter.util
  * <p>Note: This does not GC it, but it can be if necessary</p>
  */
 interface Disposable {
+    /**
+     * Disposes the Object
+     */
     void dispose()
 }
