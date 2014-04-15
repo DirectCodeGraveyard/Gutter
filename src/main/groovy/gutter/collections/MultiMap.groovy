@@ -1,12 +1,8 @@
 package gutter.collections
-
-import groovy.transform.CompileStatic
-
 /**
  * A MultiMap is a map to a String and a List of objects
  * @param < V > Value Type
  */
-@CompileStatic
 class MultiMap<V> {
     private final Map<String, List<V>> delegate
 
