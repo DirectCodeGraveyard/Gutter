@@ -6,11 +6,11 @@ import groovy.transform.CompileStatic
 class Mutable<T> implements Disposable {
     private T value
 
-    private Mutable(T value = null) {
+    private Mutable(final T value = null) {
         this.value = value
     }
 
-    static <T> Mutable<T> of(T value = null) {
+    static <T> Mutable<T> of(final T value = null) {
         return new Mutable<T>(value)
     }
 
@@ -18,8 +18,8 @@ class Mutable<T> implements Disposable {
         return value
     }
 
-    T set(T value) {
-        T old = value
+    T set(final T value) {
+        final T old = value
         this.value = value
         return old
     }
@@ -32,7 +32,7 @@ class Mutable<T> implements Disposable {
         return get()
     }
 
-    T call(T value) {
+    T call(final T value) {
         return set(value)
     }
 
