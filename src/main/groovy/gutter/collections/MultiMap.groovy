@@ -23,11 +23,7 @@ class MultiMap<V> {
     }
 
     List<V> get(String key) {
-        if (delegate.containsKey(key)) {
-            return delegate[key]
-        } else {
-            return (delegate[key] = [])
-        }
+        return delegate.containsKey(key) ? delegate[key] : (delegate[key] = [])
     }
 
     boolean contains(String key) {
