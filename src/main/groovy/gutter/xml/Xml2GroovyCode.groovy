@@ -56,7 +56,7 @@ class Xml2GroovyCode {
                     if (!all) {
                         writer.createMethodCall(null, "sleep", inst.attribute('for').toString())
                     }
-                    inst.each { st ->
+                    inst.each { Node st ->
                         if (all) {
                             writer.createMethodCall(null, "sleep", inst.attribute('for').toString())
                         }

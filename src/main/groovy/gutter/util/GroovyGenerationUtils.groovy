@@ -1,5 +1,8 @@
 package gutter.util
 
+import groovy.transform.CompileStatic
+
+@CompileStatic
 class GroovyGenerationUtils {
 
     static final List<String> RESERVED_WORDS = [
