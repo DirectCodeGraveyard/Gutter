@@ -1,16 +1,16 @@
 package gutter.xml
 
+import gutter.util.GroovyCodeWriter
+
 @SuppressWarnings("GroovyOverlyComplexMethod")
 class Xml2GroovyCode {
-
-    protected IndentPrinter out
-
+    protected GroovyCodeWriter writer
     protected XmlParser parser
 
     Xml2GroovyCode(Writer output) {
-        out = new IndentPrinter(output, "    ")
         parser = new XmlParser(false, true, true)
         parser.keepIgnorableWhitespace = false
+        writer = new GroovyCodeWriter(output, 4)
     }
 
     void feed(String input) {
@@ -36,42 +36,42 @@ class Xml2GroovyCode {
     protected void visitStatementInstruction(Node inst) {
         switch (inst.name()) {
             case "println":
-                createMethodCall(null, "println", "\"${inst.text()}\"")
+                writer.createMethodCall(null, "println", "\"${inst.text()}\"")
                 break
             case "print":
-                createMethodCall(null, "print", "\"${inst.text()}\"")
+                writer.createMethodCall(null, "print", "\"${inst.text()}\"")
                 break
             case "variable":
-                createVariableDeclaration((inst.attribute("type") ?: "def").toString(), inst.attribute("name").toString(), inst.text())
+                writer.createVariableDeclaration((inst.attribute("type") ?: "def").toString(), inst.attribute("name").toString(), inst.text())
                 break
             case "foreach":
                 def index = (inst.attribute("index") ?: false) as boolean
-                createClosureCall(inst.attribute("in") as String, index ? "eachWithIndex" : "each", index ? [ "it", "index" ] : [ "it" ]) { ->
+                writer.createClosureCall(inst.attribute("in") as String, index ? "eachWithIndex" : "each", index ? [ "it", "index" ] : [ "it" ]) { ->
                     inst.each(this.&visitStatementInstruction)
                 }
                 break
             case "delayed":
                 def all = inst.attribute("all") as boolean
-                createEnclosedBlock { ->
+                writer.createEnclosedBlock { ->
                     if (!all) {
-                        createMethodCall(null, "sleep", inst.attribute('for').toString())
+                        writer.createMethodCall(null, "sleep", inst.attribute('for').toString())
                     }
                     inst.each { st ->
                         if (all) {
-                            createMethodCall(null, "sleep", inst.attribute('for').toString())
+                            writer.createMethodCall(null, "sleep", inst.attribute('for').toString())
                         }
                         visitStatementInstruction(st)
                     }
                 }
                 break
             case "code":
-                out.println(inst.text())
+                writer.createCode(inst.text())
                 break
             case "exit":
-                createMethodCall("System", "exit", (inst.attribute("code") ?: 1) as String)
+                writer.createMethodCall("System", "exit", (inst.attribute("code") ?: 1) as String)
                 break
             case "if":
-                createIfStatement((inst.children().find { Node n -> n?.name() == "condition" } as Node).text(), {
+                writer.createIfStatement((inst.children().find { Node n -> n?.name() == "condition" } as Node).text(), {
                     (inst.children().findAll { Node n ->
                         n?.name() == "then"
                     } as NodeList)*.each(this.&visitStatementInstruction)
@@ -82,7 +82,7 @@ class Xml2GroovyCode {
                 })
                 break
             case "while":
-                createWhileLoop(inst.attribute("condition") as String) {
+                writer.createWhileLoop(inst.attribute("condition") as String) {
                     inst.each(this.&visitStatementInstruction)
                 }
                 break
@@ -90,77 +90,6 @@ class Xml2GroovyCode {
                 throw new GroovyConvertException("Unknown instruction '${inst.name()}'")
                 break
         }
-    }
-
-    protected void createIfStatement(String condition, Closure callback, Closure elseCallback = null) {
-        out.print("if(")
-        out.print(condition)
-        out.println(') {')
-        out.incrementIndent()
-        out.autoIndent = true
-        callback()
-        out.autoIndent = false
-        out.decrementIndent()
-        if (elseCallback) {
-            out.println("} else {")
-            out.incrementIndent()
-            out.autoIndent = true
-            elseCallback()
-            out.autoIndent = false
-            out.decrementIndent()
-        }
-        out.println("}")
-    }
-
-    protected void createWhileLoop(String condition, Closure callback) {
-        out.print("while(")
-        out.print(condition)
-        out.println(') {')
-        out.incrementIndent()
-        out.autoIndent = true
-        callback()
-        out.autoIndent = false
-        out.decrementIndent()
-        out.println("}")
-    }
-
-    protected void createMethodCall(String on = null, String methodName, String... paramExpr) {
-        out.println("${on ? on + '.' : ''}${methodName}(${paramExpr.join(', ')})")
-    }
-
-    protected void createEnclosedBlock(Closure callback) {
-        out.println("{ ->")
-        out.incrementIndent()
-        out.autoIndent = true
-        callback()
-        out.autoIndent = false
-        out.decrementIndent()
-        out.println("}()")
-    }
-
-    protected void createClosureCall(String on = null, String name, List<String> params = [], Closure callback) {
-        if (on)
-            out.print "${on}."
-        out.print(name)
-        out.print(' { ')
-        out.print(params.join(', '))
-        out.println(' ->')
-        out.incrementIndent()
-        out.autoIndent = true
-        callback()
-        out.autoIndent = false
-        out.decrementIndent()
-        out.println('}')
-    }
-
-    protected void createVariableDeclaration(String type = "def", String name, String equalsExpr) {
-        out.print(type ?: 'def')
-        out.print(' ')
-        createPropertyDeclaration(name, equalsExpr)
-    }
-
-    protected void createPropertyDeclaration(String name, String equalsExpr) {
-        out.println("${name} = ${equalsExpr}")
     }
 
     protected static void visitClassNode(Node node) {
