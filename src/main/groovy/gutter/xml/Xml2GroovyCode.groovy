@@ -68,7 +68,7 @@ class Xml2GroovyCode {
                 writer.createCode(inst.text())
                 break
             case "exit":
-                writer.createMethodCall("System", "exit", (inst.attribute("code") ?: 1) as String)
+                writer.createMethodCall("System", "exit", (inst.attribute("code") ?: 0) as String)
                 break
             case "if":
                 writer.createIfStatement((inst.children().find { Node n -> n?.name() == "condition" } as Node).text(), {
