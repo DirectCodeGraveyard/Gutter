@@ -42,11 +42,12 @@ class NetworkClient {
         String line = ""
         while (true) {
             def buffer = ByteBuffer.allocate(1)
-            def amount = channel.read(buffer).intValue()
+            def amount = channel.read(buffer)
             if (amount == 0) {
                 break
             }
             line += buffer.getChar(0)
         }
+        line
     }
 }
