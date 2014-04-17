@@ -46,7 +46,7 @@ class Xml2GroovyMarkup {
         }
 
         /* Create the node */
-        out.print(GroovyGenerationUtils.addQuotesIfNeeded(node.name()))
+        out.print(GroovyGenerationUtils.addQuotesIfNeeded(node.name() as String))
 
         /* Create the attributes as the parameters */
         if (node.attributes()) {
