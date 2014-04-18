@@ -1,4 +1,5 @@
 package gutter.collections
+
 /**
  * A MultiMap is a map to a String and a List of objects
  * @param < V > Value Type
@@ -42,8 +43,28 @@ class MultiMap<V> {
         return delegate.values().toList()
     }
 
+    void each(Closure closure) {
+        delegate.each(closure)
+    }
+
     void each(String key, Closure closure) {
         get(key).each(closure)
+    }
+
+    List<V> remove(String key) {
+        return delegate.remove(key)
+    }
+
+    V last(String key) {
+        return empty(key) ? null : get(key).last()
+    }
+
+    List<V> take(String key, int amount) {
+        return get(key).take(amount)
+    }
+
+    void clear() {
+        delegate.clear()
     }
 
     @Override
