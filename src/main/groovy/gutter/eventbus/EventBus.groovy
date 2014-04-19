@@ -17,6 +17,10 @@ class EventBus {
         this.options = options
     }
 
+    static EventBus create(EventBusOption... options) {
+        return new EventBus(options)
+    }
+
     void on(String eventName, @ClosureParams(value = SimpleType, options = ["Map<String, ? extends Object>"]) Closure handler) {
         handlers.add(eventName, handler)
     }
