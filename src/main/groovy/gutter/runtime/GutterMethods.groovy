@@ -1,5 +1,6 @@
 package gutter.runtime
 
+import groovy.json.JsonBuilder
 import groovy.json.JsonSlurper
 import groovy.transform.CompileStatic
 import gutter.collections.MultiMap
@@ -30,5 +31,9 @@ class GutterMethods {
 
     static Object parseJSON(String input) {
         return new JsonSlurper().parseText(input)
+    }
+
+    static String encodeJSON(Object obj) {
+        return new JsonBuilder(obj).toString()
     }
 }
