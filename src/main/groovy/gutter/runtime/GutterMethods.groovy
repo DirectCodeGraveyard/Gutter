@@ -1,5 +1,6 @@
 package gutter.runtime
 
+import groovy.json.JsonSlurper
 import groovy.transform.CompileStatic
 import gutter.collections.MultiMap
 import gutter.util.Mutable
@@ -25,5 +26,9 @@ class GutterMethods {
             newList.add(value)
         }
         return newList
+    }
+
+    static Object parseJSON(String input) {
+        return new JsonSlurper().parseText(input)
     }
 }
