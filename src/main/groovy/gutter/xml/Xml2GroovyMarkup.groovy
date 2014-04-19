@@ -53,7 +53,7 @@ class Xml2GroovyMarkup {
             out.print("(")
             node.attributes().eachWithIndex { Map.Entry<Object, Object> entry, int i ->
                 /* Use Commas when needed */
-                if (i != node.attributes().size() - 1) {
+                if (i != 0) {
                     out.print(", ")
                 }
                 /* Create this attribute */
@@ -61,13 +61,14 @@ class Xml2GroovyMarkup {
             }
 
             /* Close the method call */
-            if (!(node.children() instanceof NodeList && node.children().first() == node.value())) {
+            if (!XmlUtil.hasValue(node)) {
                 out.print(")")
             }
         }
 
         /* Print the Value if needed */
-        if (node.value() != null && node.value() instanceof List && node.children().first() instanceof String) {
+        //noinspection GroovyOverlyComplexBooleanExpression
+        if (node.value() != null && node.value() instanceof List && node.children() && node.children().first() instanceof String) {
             if (node.attributes()) {
                 out.print(", ")
             } else {
@@ -82,6 +83,9 @@ class Xml2GroovyMarkup {
         if (node.children().findAll {
             it instanceof Node
         }.empty) {
+            if (!node.children() && !node.attributes()) {
+                out.print('()')
+            }
             return
         }
 
@@ -125,7 +129,7 @@ class Xml2GroovyMarkup {
             System.exit(1)
         }
         def output = new StringWriter()
-        def converter = new Xml2GroovyMarkup(output, 4)
+        def converter = new Xml2GroovyMarkup(output, 2)
         converter.feed(input)
         converter.complete()
         print output.toString()
