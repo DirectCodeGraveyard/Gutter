@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<script>
+    <delayed for="500" all="true">
+        <print>H</print>
+        <print>e</print>
+        <print>l</print>
+        <print>l</print>
+        <print>o</print>
+    </delayed>
+    <println/>
+    <variable name="test">'Hello'</variable>
+
+    <foreach in="test" index="true">
+        <println>[${index}]: ${it}</println>
+    </foreach>
+
+    <foreach in="'Hello'">
+        <sleep for="40"/>
+        <print>${it}</print>
+    </foreach>
+
+    <while condition="true">
+        <delayed for="4000">
+            <println>HELLO</println>
+        </delayed>
+    </while>
+
+    <if>
+        <condition>1 != 1</condition>
+        <then>
+            <println>1 is not equal to 1</println>
+        </then>
+        <else>
+            <println>1 is equal to 1</println>
+        </else>
+    </if>
+
+    <repeat times="4">
+        <println>Troll</println>
+    </repeat>
+</script>
