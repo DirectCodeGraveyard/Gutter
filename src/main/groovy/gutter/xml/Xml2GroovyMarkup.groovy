@@ -129,7 +129,7 @@ class Xml2GroovyMarkup {
             System.exit(1)
         }
         def output = new StringWriter()
-        def converter = new Xml2GroovyMarkup(output, 2)
+        def converter = new Xml2GroovyMarkup(output, 4)
         converter.feed(input)
         converter.complete()
         print output.toString()
