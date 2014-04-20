@@ -13,9 +13,7 @@ class GroovyCodeWriter {
     }
 
     void createIfStatement(String condition, Closure callback, Closure elseCallback = null) {
-        out.print("if(")
-        out.print(condition)
-        out.println(') {')
+        out.println("if (${condition}) {")
         out.incrementIndent()
         out.autoIndent = true
         callback()
@@ -33,9 +31,7 @@ class GroovyCodeWriter {
     }
 
     void createWhileLoop(String condition, Closure callback) {
-        out.print("while(")
-        out.print(condition)
-        out.println(') {')
+        out.println("while (${condition}) {")
         out.incrementIndent()
         out.autoIndent = true
         callback()
