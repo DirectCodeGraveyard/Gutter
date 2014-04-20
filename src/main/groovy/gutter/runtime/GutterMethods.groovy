@@ -36,4 +36,8 @@ class GutterMethods {
     static String encodeJSON(Object obj) {
         return new JsonBuilder(obj).toString()
     }
+
+    static <T> T parseJSON(String input, Class<?> type) {
+        return input.parseJSON().asType(type) as T
+    }
 }
