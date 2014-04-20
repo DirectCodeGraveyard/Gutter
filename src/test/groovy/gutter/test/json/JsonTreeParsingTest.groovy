@@ -5,7 +5,7 @@ import org.junit.Test
 
 class JsonTreeParsingTest {
     @Test
-    void testTreeParsingWithSimpleTypeWorks() {
+    void testSimpleCollectionOfTypeParsing() {
         List<Person> people = JSON.parse('''
         [
             {

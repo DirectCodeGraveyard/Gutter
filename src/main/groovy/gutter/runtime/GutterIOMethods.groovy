@@ -1,5 +1,7 @@
 package gutter.runtime
 
+import groovy.json.JsonParserType
+import groovy.json.JsonSlurper
 import groovy.transform.CompileStatic
 
 import java.nio.file.CopyOption
@@ -8,7 +10,7 @@ import java.nio.file.LinkOption
 import java.nio.file.Path
 
 @CompileStatic
-class GutterNIOMethods {
+class GutterIOMethods {
     static boolean exists(Path path, LinkOption... linkOptions) {
         Files.exists(path, linkOptions)
     }
@@ -19,5 +21,15 @@ class GutterNIOMethods {
 
     static void copyFrom(Path target, Path source, CopyOption... options) {
         Files.copy(source, target, options)
+    }
+
+    static Object parseJSON(Path source) {
+        new JsonSlurper().parse(source.newReader())
+    }
+
+    static Object parseJSON(Path source, JsonParserType parser) {
+        def slurper = new JsonSlurper()
+        slurper.type = parser
+        slurper.parse(source.newReader())
     }
 }
