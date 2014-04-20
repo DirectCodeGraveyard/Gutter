@@ -44,6 +44,6 @@ class GutterMethods {
     }
 
     static <T> T parseJSON(String input, Class<T> type) {
-        return input.parseJSON().asType(type)
+        return parseJSON(input).asType(type)
     }
 }

@@ -28,7 +28,7 @@ class GutterIOMethods {
     }
 
     static <T> T parseJSON(Path source, Class<T> type) {
-        source.text.parseJSON(type)
+        GutterMethods.parseJSON(source.text, type)
     }
 
     static Object parseJSON(Path source, JsonParserType parser) {
