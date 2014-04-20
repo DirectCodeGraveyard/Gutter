@@ -26,6 +26,7 @@ class EventBus {
     }
 
     void dispatch(String eventName, Map<String, ? extends Object> params = [:]) {
+        /* If there are no handlers, check if dead events are enabled, and if so, dispatch a dead event */
         if (!handlers.contains(eventName)) {
             if (EventBusOption.EMIT_DEAD_EVENT in options && eventName != "dead.event") {
                 dispatch("dead.event", [
