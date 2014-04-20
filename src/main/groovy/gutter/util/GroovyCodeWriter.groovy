@@ -12,31 +12,27 @@ class GroovyCodeWriter {
         this.out = new IndentPrinter(actual, ' ' * indent)
     }
 
-    void createIfStatement(String condition, Closure callback, Closure elseCallback = null) {
-        out.println("if (${condition}) {")
+    void callBlock(Closure closure) {
         out.incrementIndent()
         out.autoIndent = true
-        callback()
+        closure()
         out.autoIndent = false
         out.decrementIndent()
+    }
+
+    void createIfStatement(String condition, Closure callback, Closure elseCallback = null) {
+        out.println("if (${condition}) {")
+        callBlock(callback)
         if (elseCallback) {
             out.println("} else {")
-            out.incrementIndent()
-            out.autoIndent = true
-            elseCallback()
-            out.autoIndent = false
-            out.decrementIndent()
+            callBlock(elseCallback)
         }
         out.println("}")
     }
 
     void createWhileLoop(String condition, Closure callback) {
         out.println("while (${condition}) {")
-        out.incrementIndent()
-        out.autoIndent = true
-        callback()
-        out.autoIndent = false
-        out.decrementIndent()
+        callBlock(callback)
         out.println("}")
     }
 
@@ -61,11 +57,7 @@ class GroovyCodeWriter {
         out.print(' { ')
         out.print(params.join(', '))
         out.println(' ->')
-        out.incrementIndent()
-        out.autoIndent = true
-        callback()
-        out.autoIndent = false
-        out.decrementIndent()
+        callBlock(callback)
         out.println('}')
     }
 
@@ -84,16 +76,14 @@ class GroovyCodeWriter {
     }
 
     void createMethodCallWithMapParamsAndStringAsLastParam(String name, Map<String, String> params, String lastParam) {
-        out.print(name)
-        out.print('(')
+        out.println("${name}(")
         params.eachWithIndex { key, value, index ->
             out.print(key)
             out.print(': ')
             out.print(value)
             out.print(', ')
         }
-        out.print("'${lastParam}'")
-        out.println(')')
+        out.println("'${lastParam}')")
     }
 
     void createClosureCallWithMapParams(String name, Map<String, String> params, Closure callback) {
