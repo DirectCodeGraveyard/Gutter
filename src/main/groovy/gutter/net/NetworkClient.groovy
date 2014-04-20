@@ -1,6 +1,8 @@
 package gutter.net
 
 import groovy.transform.CompileStatic
+import groovy.transform.stc.ClosureParams
+import groovy.transform.stc.SimpleType
 
 @CompileStatic
 class NetworkClient {
@@ -11,6 +13,7 @@ class NetworkClient {
 
     NetworkClient(String host, int port) {
         address = new InetSocketAddress(host, port)
+        socket = new Socket()
     }
 
     NetworkClient(Socket socket) {
@@ -43,6 +46,10 @@ class NetworkClient {
 
     String readLine() {
         input.readLine()
+    }
+
+    void eachLine(@ClosureParams(value = SimpleType, options = ["String"]) Closure closure) {
+        input.eachLine(closure)
     }
 
     List<String> readLines() {

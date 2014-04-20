@@ -1,5 +1,8 @@
 package gutter.net
 
+import groovy.transform.stc.ClosureParams
+import groovy.transform.stc.SimpleType
+
 class NetworkServer {
     final String listenHost
     final int listenPort
@@ -13,12 +16,12 @@ class NetworkServer {
         this.serverSocket = new ServerSocket()
     }
 
-    void listen(Closure callback) {
+    void listen(Closure callback = {}) {
         serverSocket.bind(new InetSocketAddress(listenHost, listenPort))
         callback()
     }
 
-    void handleClient(Closure closure) {
+    void handleClient(@ClosureParams(value = SimpleType, options = ["gutter.net.NetworkClient"]) Closure closure) {
         if (handler) {
             throw new IllegalStateException("Can't override the existing handler.")
         }
