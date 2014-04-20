@@ -6,6 +6,8 @@ import groovy.transform.CompileStatic
 import gutter.collections.MultiMap
 import gutter.util.Mutable
 
+import java.nio.file.Path
+
 @CompileStatic
 class GutterMethods {
 
@@ -33,11 +35,15 @@ class GutterMethods {
         return new JsonSlurper().parseText(input)
     }
 
+    static Object parseJSON(File file) {
+        return new JsonSlurper().parse(file)
+    }
+
     static String encodeJSON(Object obj) {
         return new JsonBuilder(obj).toString()
     }
 
-    static <T> T parseJSON(String input, Class<?> type) {
-        return input.parseJSON().asType(type) as T
+    static <T> T parseJSON(String input, Class<T> type) {
+        return input.parseJSON().asType(type)
     }
 }

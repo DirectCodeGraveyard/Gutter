@@ -27,6 +27,10 @@ class GutterIOMethods {
         new JsonSlurper().parse(source.newReader())
     }
 
+    static <T> T parseJSON(Path source, Class<T> type) {
+        source.text.parseJSON(type)
+    }
+
     static Object parseJSON(Path source, JsonParserType parser) {
         def slurper = new JsonSlurper()
         slurper.type = parser
