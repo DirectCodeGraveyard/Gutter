@@ -2,7 +2,7 @@ package gutter.xml
 
 import gutter.util.GroovyCodeWriter
 
-@SuppressWarnings("GroovyOverlyComplexMethod")
+@SuppressWarnings(["GroovyOverlyComplexMethod", "GroovyOverlyLongMethod"])
 class Xml2GroovyCode {
     protected GroovyCodeWriter writer
     protected XmlParser parser
