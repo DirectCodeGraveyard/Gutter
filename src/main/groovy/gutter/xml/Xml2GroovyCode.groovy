@@ -86,6 +86,14 @@ class Xml2GroovyCode {
                     inst.each(this.&visitStatementInstruction)
                 }
                 break
+            case "sleep":
+                writer.createMethodCall(null, "sleep", inst.attribute('for').toString())
+                break
+            case "repeat":
+                writer.createClosureCall(inst.attribute("times").toString(), "times", [ "it" ]) {
+                    inst.each(this.&visitStatementInstruction)
+                }
+                break
             default:
                 throw new GroovyConvertException("Unknown instruction '${inst.name()}'")
                 break
