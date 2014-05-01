@@ -12,8 +12,13 @@ repositories {
 }
 
 dependencies {
-    compile "org.codehaus.groovy:groovy-all:2.3.0-beta-2${indy ? ":indy" : ""}"
+    compile "org.codehaus.groovy:groovy-all:2.3.0-rc-4${indy ? ":indy" : ""}"
     compile "org.codehaus.gpars:gpars:1.1.0"
     compile "com.bloidonia:groovy-stream:0.8.1"
     testCompile "junit:junit:4.11"
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = "2.0-20140421031425+0000"
+    distributionUrl = "http://services.gradle.org/distributions-snapshots/gradle-${gradleVersion}-all.zip"
 }
