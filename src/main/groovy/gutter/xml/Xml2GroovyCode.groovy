@@ -53,7 +53,7 @@ class Xml2GroovyCode {
             case "delayed":
                 def all = inst.attribute("all") as boolean
                 writer.createEnclosedBlock { ->
-                    if (!all) {
+                    if (all.negate()) {
                         writer.createMethodCall(null, "sleep", inst.attribute('for').toString())
                     }
                     inst.each { Node st ->

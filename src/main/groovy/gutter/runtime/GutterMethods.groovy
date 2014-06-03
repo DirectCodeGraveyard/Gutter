@@ -45,7 +45,19 @@ class GutterMethods {
         return parseJSON(input).asType(type)
     }
 
-    static Boolean negate(Boolean input){
-        !input
+    static Boolean negate(Boolean self){
+        !self
+    }
+
+    static Boolean and(Boolean self, Boolean other) {
+        self && other
+    }
+
+    static Boolean or(Boolean self, Boolean other) {
+        self || other
+    }
+
+    static Boolean xor(Boolean self, Boolean other) {
+        other.is(self.negate())
     }
 }
