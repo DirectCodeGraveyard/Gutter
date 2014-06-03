@@ -19,10 +19,14 @@
         <print>${it}</print>
     </foreach>
 
-    <while condition="true">
+    <println/>
+
+    <variable name="count">1</variable>
+    <while condition="count != 5">
         <delayed for="4000">
             <println>HELLO</println>
         </delayed>
+        <increment>count</increment>
     </while>
 
     <if>

@@ -94,6 +94,9 @@ class Xml2GroovyCode {
                     inst.each(this.&visitStatementInstruction)
                 }
                 break
+            case "increment":
+                writer.createCode("${inst.text()}++")
+                break
             default:
                 throw new GroovyConvertException("Unknown instruction '${inst.name()}'")
                 break
