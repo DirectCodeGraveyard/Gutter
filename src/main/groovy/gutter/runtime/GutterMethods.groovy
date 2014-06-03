@@ -58,6 +58,6 @@ class GutterMethods {
     }
 
     static Boolean xor(Boolean self, Boolean other) {
-        other.is(self.negate())
+        other == !self
     }
 }
