@@ -6,8 +6,6 @@ import groovy.transform.CompileStatic
 import gutter.collections.MultiMap
 import gutter.util.Mutable
 
-import java.nio.file.Path
-
 @CompileStatic
 class GutterMethods {
 
@@ -45,5 +43,9 @@ class GutterMethods {
 
     static <T> T parseJSON(String input, Class<T> type) {
         return parseJSON(input).asType(type)
+    }
+
+    static Boolean negate(Boolean input){
+        !input
     }
 }
